@@ -1,0 +1,31 @@
+package main
+
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+
+func isValidBST(root *TreeNode) bool {
+	vals := make([]int, 0)
+
+	inorder(root, &vals)
+
+	for i := 1; i < len(vals); i++ {
+		if vals[i] <= vals[i-1] {
+			return false
+		}
+	}
+	return true
+
+}
+
+func inorder(root *TreeNode, vals *[]int) {
+	if root == nil {
+		return
+	}
+
+	inorder(root.Left, vals)
+	*vals = append(*vals, root.Val)
+	inorder(root.Right, vals)
+}
